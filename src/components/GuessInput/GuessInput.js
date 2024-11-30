@@ -1,11 +1,24 @@
 import React from 'react';
 
-function GuessInput({ guess, handleChange }) {
+function GuessInput({ saveGuess }) {
+  const [tentativeGuess, setTentativeGuess] = React.useState('');
+
+  function handleChange(event) {
+    const inputType = event.nativeEvent.inputType;
+    const value = event.target.value;
+
+    // Block numbers
+    if (!/^[a-zA-Z]+$/.test(value) && inputType !== 'deleteContentBackward') return;
+
+    const upperCaseValue = value.toUpperCase();
+    setTentativeGuess(upperCaseValue);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
-    console.log({ guess });
-    handleChange('');
+    saveGuess(tentativeGuess);
+    setTentativeGuess('');
   }
 
   return (
@@ -19,8 +32,8 @@ function GuessInput({ guess, handleChange }) {
         maxLength={5}
         pattern="[a-zA-Z]{5}"
         type="text"
-        value={guess}
-        onChange={(e) => handleChange(e.target.value)}
+        value={tentativeGuess}
+        onChange={handleChange}
         title="5 letter word"
       />
     </form>
