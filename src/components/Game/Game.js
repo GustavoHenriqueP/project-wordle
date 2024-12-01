@@ -15,9 +15,7 @@ function Game() {
 
   function saveGuess(tentativeGuess) {
     setGuesses((currentGuesses) => {
-      const nextResult = { id: Math.random(), value: tentativeGuess };
-
-      return [...currentGuesses, nextResult];
+      return [...currentGuesses, tentativeGuess];
     });
   }
 
